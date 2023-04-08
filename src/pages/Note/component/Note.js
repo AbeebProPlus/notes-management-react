@@ -1,5 +1,5 @@
 import "../styles/Note.css"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate} from "react-router-dom"
 import Modals from "../../../Reusables/Modals"
 const Note = (props) => {
@@ -16,6 +16,10 @@ const Note = (props) => {
             }
         })
     }
+
+    useEffect(() => {
+        props.refetch()
+    },[notification, props])
 
     const deleteHandler = async (value) => {
         const response = await fetch("http://localhost:8080/delete_note", {
@@ -36,7 +40,6 @@ const Note = (props) => {
             userName: props.userName
         }
         deleteHandler(selectedNote)
-        props.refetch()
     }
     return (
         <div className="note" >
