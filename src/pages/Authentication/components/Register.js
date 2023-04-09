@@ -37,11 +37,12 @@ const Register = () => {
                 'Content-Type': 'application/json'
               },
         });
-        if (!response.ok){
+        const data = await response.json()
+        if (!data.statusCode === 'OK'){
             throw new Error("Username/email exists")
         }
-        const data = await response.json()
-        alert(data.message)
+        console.log(data)
+        alert(data.data.message)
         navigate("/login")
         }catch(error){
             setErrorMessage(error.message)
