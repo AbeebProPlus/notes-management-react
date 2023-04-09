@@ -7,24 +7,23 @@ const Header = (props) => {
         const newValue = event.target.value
         setNoteTitle(newValue);
     }
+    
     const navigate = useNavigate()
     const getHandler = async (item) => {
-        try{
+    
             const response = await fetch(`http://localhost:8080/notes/${props.userName}`);
-            if (!response.ok){
-             throw new Error("Something went wrong!")
+            if (!response.ok) {
+                throw new Error("Something went wrong!")
             }
             const data = await response.json()
-            console.log(data)
+            const foundData = data.data
+            
             navigate("/view", {
                 state: {
-                    data: data,
+                    data: foundData,
                     userName: props.userName
                 }
             })
-        }catch(error){
-            console.log(error.message)
-        }
     }
 
     const fetchNotes = () => {
@@ -32,7 +31,6 @@ const Header = (props) => {
     }
 
     const searchHandler = async (value) => {
-        try{
             const response = await fetch("http://localhost:8080/noteTitle", {
                 method: 'POST',
                 body: JSON.stringify(value),
@@ -46,15 +44,12 @@ const Header = (props) => {
             const data = await response.json()
             navigate("/view", { 
                 state: { 
-                    data: data,
+                    data: data.data,
                     userName: props.userName
                 } 
             });
 
-        }catch(error){
-            console.log(error.message)
         }
-    }
     const handleSearch = () => {
         const noteObj = {
             noteTitle: title,
