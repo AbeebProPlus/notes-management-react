@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom"
 import "../styles/ViewNotes.css"
 import Note from "./Note"
-import { useState } from "react"
+import { useState} from "react"
 
 const ViewNotes = (props) => {
     const navigate = useNavigate()
@@ -10,7 +10,7 @@ const ViewNotes = (props) => {
     const [newNotes, setNewNotes] = useState(notes)
     const [error, setError] = useState("")
     const userName = location.state.userName
-
+    
     const refetch = async () => {
       try{
       const response = await fetch(`http://localhost:8080/notes/${userName}`);
@@ -18,7 +18,7 @@ const ViewNotes = (props) => {
         throw new Error("Something is wrong")
       }
       const data = await response.json()
-      setNewNotes(data)
+      setNewNotes(data.data)
       }catch(error){
         setError(error.message)
       }
