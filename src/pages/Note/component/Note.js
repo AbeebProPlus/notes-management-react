@@ -1,5 +1,5 @@
 import "../styles/Note.css"
-import { useState, useEffect } from "react"
+import { useState} from "react"
 import { useNavigate} from "react-router-dom"
 import Modals from "../../../Reusables/Modals"
 const Note = (props) => {
@@ -17,30 +17,28 @@ const Note = (props) => {
         })
     }
 
-    useEffect(() => {
-        props.refetch()
-    },[notification, props])
-
     const deleteHandler = async (value) => {
         const response = await fetch("http://localhost:8080/delete_note", {
-                method: 'DELETE',
-                body: JSON.stringify(value),
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+          method: 'DELETE',
+          body: JSON.stringify(value),
+          headers: {
+            'Content-Type': 'application/json'
+          },
         });
         const data = await response.json()
-        setNotification(data.message)
+        setNotification(data.data.message)
         showModal(true)
-    }
-    const deleteNote = () => {
+        props.refetch()
+      }
+      
+      const deleteNote = () => {
         showModal(false)
         const selectedNote = {
-            noteId: props.id,
-            userName: props.userName
+          noteId: props.id,
+          userName: props.userName
         }
         deleteHandler(selectedNote)
-    }
+      }
     return (
         <div className="note" >
             {modal && <Modals notification={notification}/>}
