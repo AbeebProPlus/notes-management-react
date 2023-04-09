@@ -34,7 +34,7 @@ const NoteTaker = (props) => {
                 throw new Error("Invalid title or content")
             }
             const data = await response.json()
-            setNotification(data.message)
+            setNotification(data.data.message)
             showModal(true)
         }catch(error){
             setError(error.message)
@@ -49,10 +49,6 @@ const NoteTaker = (props) => {
             content: note.content
         }
         postHandler(newNote)
-        setNote({
-            title: "",
-            content: ""
-        })
     }
     return (
         <div>
