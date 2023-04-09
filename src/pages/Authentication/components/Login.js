@@ -33,7 +33,7 @@ const Login = () => {
         }
         const data = await response.json()
         navigate("/note", {
-            state: data.userName
+            state: data.data.userName
         }) 
         }catch(error){
             setError(error.message)
